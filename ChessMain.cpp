@@ -1,12 +1,13 @@
 #include <iostream>
+#include "ChessBoard.h"
 
 using namespace std;
 
-#include "ChessBoard.h"
-
 int main() {
 
-    cout << "===========================" << endl;
+  cout << "Test 1" << endl;
+
+    /*cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;
     cout << "===========================" << endl;
     cout << endl;
@@ -75,7 +76,7 @@ int main() {
     cout << endl;
 
     cb.submitMove("D3", "G6");
-    cout << endl;
+    cout << endl;*/
 
     return 0;
 }
