@@ -5,9 +5,11 @@ using namespace std;
 
 int main() {
 
-  cout << "Test 1" << endl;
+  //ChessBoard cb;
+  //cb.resetBoard();
+  //cb.submitMove("D7", "D6");
 
-    /*cout << "===========================" << endl;
+    cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;
     cout << "===========================" << endl;
     cout << endl;
@@ -15,7 +17,7 @@ int main() {
     ChessBoard cb;
     cout << endl;
 
-    cb.submitMove("D7", "D6");
+    /*cb.submitMove("D7", "D6");
     cout << endl;
 
     cb.submitMove("D4", "H6");
@@ -33,7 +35,7 @@ int main() {
     cout << endl;
 
     cb.resetBoard();
-    cout << endl;
+    cout << endl;*/
 
     cb.submitMove("E2", "E4");
     cb.submitMove("E7", "E6");
@@ -43,7 +45,7 @@ int main() {
     cb.submitMove("D7", "D5");
     cout << endl;
 
-    cb.submitMove("B1", "C3");
+    /*cb.submitMove("B1", "C3");
     cb.submitMove("F8", "B4");
     cout << endl;
 
