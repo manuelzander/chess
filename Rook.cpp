@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Rook::Rook(Colour colour) : Piece(colour) {
-  name = "Rook";
+Rook::Rook(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
+  pieceType = ROOK;
   cout << "Rook created with colour " << pieceColour << endl;
 }
 

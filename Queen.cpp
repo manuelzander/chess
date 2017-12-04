@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Queen::Queen(Colour colour) : Piece(colour) {
-  name = "Queen";
+Queen::Queen(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
+  pieceType = QUEEN;
   cout << "Queen created with colour " << pieceColour << endl;
 }
 

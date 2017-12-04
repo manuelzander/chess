@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Pawn::Pawn(Colour colour) : Piece(colour) {
-  name = "Pawn";
+Pawn::Pawn(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
+  pieceType = PAWN;
   cout << "Pawn created with colour " << pieceColour << endl;
 }
 

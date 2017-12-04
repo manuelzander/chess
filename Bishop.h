@@ -9,7 +9,7 @@ class Bishop : public Piece {
 private:
 
 public:
-  Bishop (Colour colour);
+  Bishop (Colour _colour, ChessBoard *_board);
   ~Bishop ();
   virtual string printSymbol();
 };

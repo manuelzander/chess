@@ -5,8 +5,8 @@
 
 using namespace std;
 
-King::King(Colour colour) : Piece(colour){
-  name = "King";
+King::King(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
+  pieceType = KING;
   cout << "King created with colour " << pieceColour << endl;
 }
 

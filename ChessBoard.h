@@ -15,16 +15,13 @@
 
 using namespace std;
 
-enum Player { WHITE_PLAYER, BLACK_PLAYER };
-
 class ChessBoard {
 private:
 
   map <string, Piece*> currentBoard;
-  Player currentPlayer;
+  Colour currentPlayer;
   bool gameEnd;
   bool inCheck;
-
 
 public:
   ChessBoard();
@@ -33,13 +30,14 @@ public:
   void insertPieces(); //Insert all pieces on board
   void deletePieces(); //Delete all pieces from board
 
-  Player getCurrentPlayer();
-  void switchPlayers();
-  string printPlayerColour();
+  Colour getCurrentPlayer();
 
+  bool checkCoordinateValidity(const string coordinate);
+
+  void switchPlayers();
   void submitMove(const char* from, const char* to);
   void resetBoard();
-  
+
   void printBoard();
 };
 

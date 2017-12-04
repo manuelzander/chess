@@ -6,20 +6,24 @@
 using namespace std;
 
 enum Colour { WHITE, BLACK };
+enum Type { KING, QUEEN, PAWN, ROOK, KNIGHT, BISHOP };
+class ChessBoard;
 
 class Piece {
 protected:
 
   Colour pieceColour;
-  string name;
-  //Position *position;
-  //ChessBoard *board;
+  Type pieceType;
+  ChessBoard *board;
 
 public:
-  Piece(Colour colour);
+  Piece(Colour _colour, ChessBoard *_board);
   virtual ~Piece() = 0;
   virtual string printSymbol() = 0;
-  string printPieceName();
+  Colour getPieceColour();
+  Type getPieceType();
+  string printPieceColour();
+  string printPieceType();
 };
 
 #endif

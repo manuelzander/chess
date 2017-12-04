@@ -9,7 +9,7 @@ class Pawn : public Piece {
 private:
 
 public:
-  Pawn (Colour colour);
+  Pawn (Colour _colour, ChessBoard *_board);
   ~Pawn ();
   virtual string printSymbol();
 };

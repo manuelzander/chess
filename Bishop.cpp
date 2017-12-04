@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Bishop::Bishop(Colour colour) : Piece(colour) {
-  name = "Bishop";
+Bishop::Bishop(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
+  pieceType = BISHOP;
   cout << "Bishop created with colour " << pieceColour << endl;
 }
 

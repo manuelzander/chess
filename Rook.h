@@ -9,7 +9,7 @@ class Rook : public Piece {
 private:
 
 public:
-  Rook (Colour colour);
+  Rook (Colour _colour, ChessBoard *_board);
   ~Rook ();
   virtual string printSymbol();
 };

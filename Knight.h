@@ -9,7 +9,7 @@ class Knight : public Piece {
 private:
 
 public:
-  Knight (Colour colour);
+  Knight (Colour _colour, ChessBoard *_board);
   ~Knight ();
   virtual string printSymbol();
 };
