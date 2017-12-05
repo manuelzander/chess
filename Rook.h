@@ -2,7 +2,9 @@
 #define ROOK_H
 
 #include <string>
+#include <cmath>
 
+#include "ChessBoard.h"
 #include "Piece.h"
 
 class Rook : public Piece {

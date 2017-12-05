@@ -10,6 +10,7 @@ ChessBoard::ChessBoard(){
   currentPlayer = WHITE;
   gameEnd = false;
   inCheck = false;
+  pieceCaptured = false;
   insertPieces();
 }
 
@@ -19,6 +20,10 @@ ChessBoard::~ChessBoard(){
 
 void ChessBoard::switchPlayers(){
   currentPlayer = currentPlayer == WHITE ? BLACK : WHITE;
+}
+
+void ChessBoard::setPieceCaptured(){
+  pieceCaptured = pieceCaptured == false ? true : false;
 }
 
 
@@ -32,7 +37,7 @@ void ChessBoard::insertPieces(){
   currentBoard["B1"] = new Knight(WHITE, this);
   currentBoard["C1"] = new Bishop(WHITE, this);
   currentBoard["D1"] = new Queen(WHITE, this);
-  currentBoard["E1"] = new King(WHITE, this);
+  currentBoard["E6"] = new King(WHITE, this);
   currentBoard["F1"] = new Bishop(WHITE, this);
   currentBoard["G1"] = new Knight(WHITE, this);
   currentBoard["H1"] = new Rook(WHITE, this);
@@ -90,6 +95,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
 
   string fromCoordinate (from);
   string toCoordinate (to);
+  pieceCaptured = false;
 
   // Consider moving these checks into a seperate function
   if(gameEnd){
@@ -97,16 +103,17 @@ void ChessBoard::submitMove(const char* from, const char* to){
     return;
   }
 
-  if(!checkCoordinateValidity(fromCoordinate)
-      || !checkCoordinateValidity(toCoordinate) ){
+  if(!checkCoordinateValid(fromCoordinate)
+      || !checkCoordinateValid(toCoordinate) ){
     cout << "A given coordinate is invalid!" << endl;
     return;
   }
 
-  if(!currentBoard.count(fromCoordinate)){
+  if(checkCoordinateEmpty(fromCoordinate)){
     cout << "There is no piece at position " << fromCoordinate << endl;
     return;
   }
+
 
   if(currentBoard[fromCoordinate]->getPieceColour() != getCurrentPlayer()){
     cout << "It is not " << currentBoard[fromCoordinate]->printPieceColour()
@@ -114,12 +121,14 @@ void ChessBoard::submitMove(const char* from, const char* to){
     return;
   }
 
-  if(currentBoard[fromCoordinate]->getPieceColour() ==
-      currentBoard[toCoordinate]->getPieceColour()){
-    cout << "One of "
-         << currentBoard[fromCoordinate]->printPieceColour()
-         << "'s pieces is already at position " << toCoordinate << endl;
-    return;
+  if (!checkCoordinateEmpty(toCoordinate)){
+    if(currentBoard[fromCoordinate]->getPieceColour() ==
+        currentBoard[toCoordinate]->getPieceColour()){
+      cout << "One of "
+           << currentBoard[fromCoordinate]->printPieceColour()
+           << "'s pieces is already at position " << toCoordinate << endl;
+      return;
+    }
   }
 
   if(fromCoordinate == toCoordinate){
@@ -142,13 +151,18 @@ void ChessBoard::submitMove(const char* from, const char* to){
 
     cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
          << currentBoard[fromCoordinate]->printPieceType() << " moves from "
-         << fromCoordinate << " to " << toCoordinate << endl;
+         << fromCoordinate << " to " << toCoordinate;
+
+    if(pieceCaptured){
+      cout << " taking " << currentBoard[toCoordinate]->printPieceColour() << "'s "
+           << currentBoard[toCoordinate]->printPieceType() << endl;
+
+      delete currentBoard[toCoordinate];
+    }
 
     currentBoard[toCoordinate] = currentBoard[fromCoordinate];
     currentBoard.erase(fromCoordinate);
-
   }
-  // Delete the pointer to the piece in case the piece is taken!
 
   // Check if other player is in check, end game if true
   // Check for stale?
@@ -169,7 +183,7 @@ void ChessBoard::printBoard() {
       string coordinate = "";
       coordinate += j;
       coordinate += i;
-      if (currentBoard.count(coordinate)){
+      if (!checkCoordinateEmpty(coordinate)){
         cout << " " << currentBoard[coordinate]->printSymbol() << " ";
       } else{
         cout << "   ";
@@ -181,7 +195,7 @@ void ChessBoard::printBoard() {
 
 }
 
-bool ChessBoard::checkCoordinateValidity(const string coordinate) {
+bool ChessBoard::checkCoordinateValid(const string coordinate) {
 
   if(coordinate[0] < 'A' || coordinate[0] > 'H'){
     return false;
@@ -193,4 +207,18 @@ bool ChessBoard::checkCoordinateValidity(const string coordinate) {
     return false;
   }
   return true;
+}
+
+bool ChessBoard::checkCoordinateEmpty(const string coordinate) {
+
+  if(currentBoard.count(coordinate)){
+    return false; //Count = 1, not empty
+  }
+  return true;
+}
+
+Colour ChessBoard::getPieceColour(const string coordinate){
+
+  return currentBoard[coordinate]->getPieceColour();
+
 }

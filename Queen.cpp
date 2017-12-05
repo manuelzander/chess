@@ -7,7 +7,6 @@ using namespace std;
 
 Queen::Queen(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
   pieceType = QUEEN;
-  cout << "Queen created with colour " << pieceColour << endl;
 }
 
 Queen::~Queen () {
@@ -19,7 +18,7 @@ bool Queen::checkMoveValidity(const string from, const string to){
   return true;
 }
 
-string Queen::printSymbol (){
+string Queen::printSymbol(){
   if (pieceColour == 0) {
     return "♕";
   }

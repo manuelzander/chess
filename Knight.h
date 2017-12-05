@@ -2,7 +2,9 @@
 #define KNIGHT_H
 
 #include <string>
+#include <cmath>
 
+#include "ChessBoard.h"
 #include "Piece.h"
 
 class Knight : public Piece {

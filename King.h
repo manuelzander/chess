@@ -2,7 +2,9 @@
 #define KING_H
 
 #include <string>
+#include <cmath>
 
+#include "ChessBoard.h"
 #include "Piece.h"
 
 class King : public Piece {

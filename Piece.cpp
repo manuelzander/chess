@@ -37,7 +37,7 @@ string Piece::printPieceType(){
     case BISHOP:
       return "Bishop";
     default:
-      break;
+      return "Error";
   }
 }
 
@@ -48,6 +48,6 @@ string Piece::printPieceColour(){
     case BLACK:
       return "Black";
     default:
-      break;
+      return "Error";
   }
 }

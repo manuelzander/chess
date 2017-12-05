@@ -2,7 +2,9 @@
 #define BISHOP_H
 
 #include <string>
+#include <cmath>
 
+#include "ChessBoard.h"
 #include "Piece.h"
 
 class Bishop : public Piece {

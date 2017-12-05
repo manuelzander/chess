@@ -7,7 +7,6 @@ using namespace std;
 
 King::King(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
   pieceType = KING;
-  cout << "King created with colour " << pieceColour << endl;
 }
 
 King::~King () {
@@ -15,11 +14,22 @@ King::~King () {
 
 bool King::checkMoveValidity(const string from, const string to){
 
-  // TODO
-  return true;
+  bool validHorizontalMove, validVerticalMove, validDiagonalMove;
+
+
+
+  validHorizontalMove = (abs(from[0] - to[0]) == 1);
+  validVerticalMove = (abs(from[1] - to[1]) == 1);
+  validDiagonalMove = (abs(from[0] - to[0]) == 1 &&
+    abs(from[1] - to[1]) == 1);
+
+  if((validHorizontalMove || validVerticalMove || validDiagonalMove) &&
+    !board->checkCoordinateEmpty(to)) board->setPieceCaptured();
+
+  return (validHorizontalMove || validVerticalMove || validDiagonalMove);
 }
 
-string King::printSymbol (){
+string King::printSymbol(){
   if (pieceColour == 0) {
     return "♔";
   }

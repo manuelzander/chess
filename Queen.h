@@ -2,7 +2,9 @@
 #define QUEEN_H
 
 #include <string>
+#include <cmath>
 
+#include "ChessBoard.h"
 #include "Piece.h"
 
 class Queen : public Piece {

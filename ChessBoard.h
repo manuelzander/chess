@@ -22,6 +22,7 @@ private:
   Colour currentPlayer;
   bool gameEnd;
   bool inCheck;
+  bool pieceCaptured;
 
 public:
   ChessBoard();
@@ -31,10 +32,13 @@ public:
   void deletePieces(); //Delete all pieces from board
 
   Colour getCurrentPlayer();
+  Colour getPieceColour(const string coordinate);
 
-  bool checkCoordinateValidity(const string coordinate);
+  bool checkCoordinateValid(const string coordinate);
+  bool checkCoordinateEmpty(const string coordinate);
 
   void switchPlayers();
+  void setPieceCaptured();
   void submitMove(const char* from, const char* to);
   void resetBoard();
 
