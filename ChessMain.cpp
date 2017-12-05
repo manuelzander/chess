@@ -5,11 +5,13 @@ using namespace std;
 
 int main() {
 
-  //ChessBoard cb;
+  ChessBoard cb;
   //cb.resetBoard();
-  //cb.submitMove("D7", "D6");
+  cb.submitMove("A1", "A2");
+  cb.submitMove("E7", "E6");
+  cb.submitMove("A4", "A5");
 
-    cout << "===========================" << endl;
+    /*cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;
     cout << "===========================" << endl;
     cout << endl;
@@ -29,7 +31,7 @@ int main() {
     cb.submitMove("F8", "B4");
     cout << endl;
 
-    /*cout << "===========================" << endl;
+    cout << "===========================" << endl;
     cout << "Alekhine vs. Vasic (1931)" << endl;
     cout << "===========================" << endl;
     cout << endl;

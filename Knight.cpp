@@ -13,6 +13,12 @@ Knight::Knight(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
 Knight::~Knight () {
 }
 
+bool Knight::checkMoveValidity(const string from, const string to){
+
+  // TODO
+  return true;
+}
+
 string Knight::printSymbol (){
   if (pieceColour == 0) {
     return "♘";

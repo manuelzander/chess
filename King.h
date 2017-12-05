@@ -12,6 +12,7 @@ public:
   King (Colour _colour, ChessBoard *_board);
   ~King ();
   virtual string printSymbol();
+  virtual bool checkMoveValidity(const string from, const string to);
 };
 
 #endif

@@ -13,6 +13,12 @@ Queen::Queen(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
 Queen::~Queen () {
 }
 
+bool Queen::checkMoveValidity(const string from, const string to){
+
+  // TODO
+  return true;
+}
+
 string Queen::printSymbol (){
   if (pieceColour == 0) {
     return "♕";

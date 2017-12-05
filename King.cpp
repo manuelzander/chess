@@ -13,6 +13,12 @@ King::King(Colour _colour, ChessBoard *_board) : Piece(_colour, _board){
 King::~King () {
 }
 
+bool King::checkMoveValidity(const string from, const string to){
+
+  // TODO
+  return true;
+}
+
 string King::printSymbol (){
   if (pieceColour == 0) {
     return "♔";

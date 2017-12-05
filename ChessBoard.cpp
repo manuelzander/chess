@@ -6,27 +6,27 @@
 
 using namespace std;
 
-ChessBoard::ChessBoard() {
+ChessBoard::ChessBoard(){
   currentPlayer = WHITE;
   gameEnd = false;
   inCheck = false;
   insertPieces();
 }
 
-ChessBoard::~ChessBoard() {
+ChessBoard::~ChessBoard(){
   deletePieces();
 }
 
-void ChessBoard::switchPlayers() {
+void ChessBoard::switchPlayers(){
   currentPlayer = currentPlayer == WHITE ? BLACK : WHITE;
 }
 
 
-Colour ChessBoard::getCurrentPlayer() {
+Colour ChessBoard::getCurrentPlayer(){
   return currentPlayer;
 }
 
-void ChessBoard::insertPieces() {
+void ChessBoard::insertPieces(){
 
   currentBoard["A1"] = new Rook(WHITE, this);
   currentBoard["B1"] = new Knight(WHITE, this);
@@ -68,7 +68,7 @@ void ChessBoard::insertPieces() {
 
 }
 
-void ChessBoard::deletePieces() {
+void ChessBoard::deletePieces(){
 
   map <string, Piece*> ::iterator it;
   for (it = currentBoard.begin(); it != currentBoard.end(); it++){
@@ -77,7 +77,7 @@ void ChessBoard::deletePieces() {
 
 }
 
-void ChessBoard::resetBoard() {
+void ChessBoard::resetBoard(){
 
   currentPlayer = WHITE;
   deletePieces();
@@ -91,6 +91,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
   string fromCoordinate (from);
   string toCoordinate (to);
 
+  // Consider moving these checks into a seperate function
   if(gameEnd){
     cout << "The game is already over!" << endl;
     return;
@@ -113,21 +114,46 @@ void ChessBoard::submitMove(const char* from, const char* to){
     return;
   }
 
+  if(currentBoard[fromCoordinate]->getPieceColour() ==
+      currentBoard[toCoordinate]->getPieceColour()){
+    cout << "One of "
+         << currentBoard[fromCoordinate]->printPieceColour()
+         << "'s pieces is already at position " << toCoordinate << endl;
+    return;
+  }
+
   if(fromCoordinate == toCoordinate){
     cout << "The positions are identical!" << endl;
     return;
   }
 
+  // Check move validity for that piece, if yes proceed, if not more is invalid
 
-  // Move after checks done
+  // Check if move would put king in check, if yes move is invalid
+  // Otherwise perform move
 
-  cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
-       << currentBoard[fromCoordinate]->printPieceType() << " moves from "
-       << fromCoordinate << " to " << toCoordinate << endl;
+  if(!currentBoard[fromCoordinate]->checkMoveValidity(fromCoordinate, toCoordinate)){
 
-  currentBoard[toCoordinate] = currentBoard[fromCoordinate];
-  currentBoard.erase(fromCoordinate);
-  // Should I delete the pointer to the piece as well?
+    cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
+         << currentBoard[fromCoordinate]->printPieceType() << " cannot move from "
+         << fromCoordinate << " to " << toCoordinate << endl;
+
+  } else{
+
+    cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
+         << currentBoard[fromCoordinate]->printPieceType() << " moves from "
+         << fromCoordinate << " to " << toCoordinate << endl;
+
+    currentBoard[toCoordinate] = currentBoard[fromCoordinate];
+    currentBoard.erase(fromCoordinate);
+
+  }
+  // Delete the pointer to the piece in case the piece is taken!
+
+  // Check if other player is in check, end game if true
+  // Check for stale?
+
+  // If checks not succeed, switch player
 
   printBoard();
   switchPlayers();
