@@ -51,3 +51,136 @@ string Piece::printPieceColour(){
       return "Error";
   }
 }
+
+bool Piece::freeHorizontalWay(const string from, const string to){
+
+  bool freeHorizontalWay = true;
+
+  string start = from;
+  if(from[Fi] > to[Fi]){
+    start[Fi] = from[Fi] - 1;
+    start[Ra] = from[Ra];
+
+    for(string coordinate = start; coordinate[Fi] > to[Fi]; coordinate[Fi]--){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeHorizontalWay = false;
+        break;
+      }
+    }
+  } else{
+    start[Fi] = from[Fi] + 1;
+    start[Ra] = from[Ra];
+
+    for(string coordinate = start; coordinate[Fi] < to[Fi]; coordinate[Fi]++){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeHorizontalWay = false;
+        break;
+      }
+    }
+  }
+  return freeHorizontalWay;
+}
+
+bool Piece::freeVerticalWay(const string from, const string to){
+
+  bool freeVerticalWay = true;
+
+  string start = from;
+  if(from[Ra] > to[Ra]){
+    start[Ra] = from[Ra] - 1;
+    start[Fi] = from[Fi];
+
+    for(string coordinate = start; coordinate[Ra] > to[Ra]; coordinate[Ra]--){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeVerticalWay = false;
+        break;
+      }
+    }
+  } else{
+    start[Ra] = from[Ra] + 1;
+    start[Fi] = from[Fi];
+
+    for(string coordinate = start; coordinate[Ra] < to[Ra]; coordinate[Ra]++){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeVerticalWay = false;
+        break;
+      }
+    }
+  }
+  return freeVerticalWay;
+}
+
+bool Piece::freeDiagonalWay(const string from, const string to){
+
+  bool freeDiagonalWay = true;
+
+  string start = from;
+  if(to[Ra] > from[Ra] && to[Fi] > from[Fi]){ //Right and up
+
+    start[Ra] = from[Ra] + 1;
+    start[Fi] = from[Fi] + 1;
+
+    for(string coordinate = start; coordinate[Ra] < to[Ra] && coordinate[Fi] < to[Fi]; coordinate[Ra]++, coordinate[Fi]++){
+      cout << coordinate << endl;
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
+
+    cout << "RU" << endl;
+
+  }
+  if(to[Ra] < from[Ra] && to[Fi] > from[Fi]){ //Right and down
+
+
+
+
+
+    cout << "RD" << endl;
+
+  }
+  if(to[Ra] > from[Ra] && to[Fi] < from[Fi]){ //Left and up
+
+
+
+
+
+    cout << "LU" << endl;
+
+  }
+  if(to[Ra] < from[Ra] && to[Fi] < from[Fi]){ //Left and down
+
+
+
+
+
+    cout << "LD" << endl;
+
+  }
+
+
+
+  /*{
+    start[Ra] = from[Ra] - 1;
+    start[Fi] = from[Fi];
+
+    for(string coordinate = start; coordinate[Ra] > to[Ra]; coordinate[Ra]--){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
+  } else{
+    start[Ra] = from[Ra] + 1;
+    start[Fi] = from[Fi];
+
+    for(string coordinate = start; coordinate[Ra] < to[Ra]; coordinate[Ra]++){
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
+  }*/
+  return freeDiagonalWay;
+}

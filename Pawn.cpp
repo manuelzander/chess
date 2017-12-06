@@ -25,7 +25,6 @@ bool Pawn::checkMoveValidity(const string from, const string to){
     string middleCoordinate = "";
     middleCoordinate += from[0];
     middleCoordinate += (from[1] + 1);
-    cout << middleCoordinate << endl;
 
     validSpecialMove = (from[1] == '2' &&
       from[0] == to[0] &&
@@ -36,9 +35,8 @@ bool Pawn::checkMoveValidity(const string from, const string to){
     validDiagonalMove = (from[1] + 1 == to[1] &&
       abs(from[0] - to[0]) == 1 &&
       !board->checkCoordinateEmpty(to));
-      //board->getPieceColour(to) == BLACK);
-
   }
+
   if (pieceColour == BLACK) {
 
     validMove = (from[0] == to[0] &&
@@ -48,7 +46,6 @@ bool Pawn::checkMoveValidity(const string from, const string to){
     string middleCoordinate = "";
     middleCoordinate += from[0];
     middleCoordinate += (from[1] - 1);
-    cout << middleCoordinate << endl;
 
     validSpecialMove = (from[1] == '7' &&
       from[0] == to[0] &&
@@ -59,11 +56,11 @@ bool Pawn::checkMoveValidity(const string from, const string to){
     validDiagonalMove = (from[1] - 1 == to[1] &&
       abs(from[0] - to[0]) == 1 &&
       !board->checkCoordinateEmpty(to));
-      //board->getPieceColour(to) == WHITE);
   }
 
-  if(validDiagonalMove == true)
-    board->setPieceCaptured();
+  /*if(validDiagonalMove)
+    board->setPieceCaptured();*/
+
   return (validMove || validSpecialMove || validDiagonalMove);
 }
 

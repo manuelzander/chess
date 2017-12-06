@@ -7,8 +7,9 @@ int main() {
 
   ChessBoard cb;
   //cb.resetBoard();
-  cb.submitMove("E6", "D8");
-
+  cb.submitMove("D2", "D3");
+  cb.submitMove("D7", "D5");
+  cb.submitMove("C4", "E6");
 
     /*cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;

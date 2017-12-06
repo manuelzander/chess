@@ -7,6 +7,8 @@ using namespace std;
 
 enum Colour { WHITE, BLACK };
 enum Type { KING, QUEEN, PAWN, ROOK, KNIGHT, BISHOP };
+enum FileRank { Fi, Ra };
+
 class ChessBoard;
 
 class Piece {
@@ -25,6 +27,9 @@ public:
   Type getPieceType();
   string printPieceColour();
   string printPieceType();
+  bool freeHorizontalWay(const string from, const string to);
+  bool freeVerticalWay(const string from, const string to);
+  bool freeDiagonalWay(const string from, const string to);
 };
 
 #endif

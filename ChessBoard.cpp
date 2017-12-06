@@ -26,7 +26,6 @@ void ChessBoard::setPieceCaptured(){
   pieceCaptured = pieceCaptured == false ? true : false;
 }
 
-
 Colour ChessBoard::getCurrentPlayer(){
   return currentPlayer;
 }
@@ -35,9 +34,9 @@ void ChessBoard::insertPieces(){
 
   currentBoard["A1"] = new Rook(WHITE, this);
   currentBoard["B1"] = new Knight(WHITE, this);
-  currentBoard["C1"] = new Bishop(WHITE, this);
+  currentBoard["C4"] = new Bishop(WHITE, this);
   currentBoard["D1"] = new Queen(WHITE, this);
-  currentBoard["E6"] = new King(WHITE, this);
+  currentBoard["E1"] = new King(WHITE, this);
   currentBoard["F1"] = new Bishop(WHITE, this);
   currentBoard["G1"] = new Knight(WHITE, this);
   currentBoard["H1"] = new Rook(WHITE, this);
@@ -147,11 +146,13 @@ void ChessBoard::submitMove(const char* from, const char* to){
          << currentBoard[fromCoordinate]->printPieceType() << " cannot move from "
          << fromCoordinate << " to " << toCoordinate << endl;
 
-  } else{
+  } else{ //...a move is valid
 
     cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
          << currentBoard[fromCoordinate]->printPieceType() << " moves from "
          << fromCoordinate << " to " << toCoordinate;
+
+    if(!checkCoordinateEmpty(toCoordinate)) setPieceCaptured();
 
     if(pieceCaptured){
       cout << " taking " << currentBoard[toCoordinate]->printPieceColour() << "'s "

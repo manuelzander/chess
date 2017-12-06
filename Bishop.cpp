@@ -14,8 +14,18 @@ Bishop::~Bishop () {
 
 bool Bishop::checkMoveValidity(const string from, const string to){
 
-  // TODO
-  return true;
+  bool validDiagonalMove, validDiagonalWay;
+
+  validDiagonalWay = freeDiagonalWay(from, to);
+
+  validDiagonalMove = (abs(from[Fi] - to[Fi]) ==
+    abs(from[Ra] - to[Ra]) &&
+    validDiagonalWay);
+
+  /*if(validDiagonalMove && !board->checkCoordinateEmpty(to))
+      board->setPieceCaptured();*/
+
+  return validDiagonalMove;
 }
 
 string Bishop::printSymbol(){

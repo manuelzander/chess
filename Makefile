@@ -4,7 +4,7 @@ chess: ChessMain.o ChessBoard.o Piece.o King.o Queen.o Knight.o Bishop.o Rook.o 
 ChessBoard.o: ChessBoard.cpp ChessBoard.h
 	g++ -Wall -g -c ChessBoard.cpp
 
-Piece.o: Piece.cpp Piece.h
+Piece.o: Piece.cpp Piece.h ChessBoard.h
 	g++ -Wall -g -c Piece.cpp
 
 King.o: King.cpp King.h
