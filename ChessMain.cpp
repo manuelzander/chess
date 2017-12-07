@@ -5,17 +5,7 @@ using namespace std;
 
 int main() {
 
-  ChessBoard cb;
-  //cb.resetBoard();
-  cb.submitMove("E2", "E3");
-  cb.submitMove("C7", "C6");
-  cb.submitMove("D5", "C6");
-  cb.submitMove("B8", "A6");
-  cb.submitMove("C6", "C7");
-  cb.submitMove("A6", "B5");
-
-
-    /*cout << "===========================" << endl;
+    cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;
     cout << "===========================" << endl;
     cout << endl;
@@ -84,7 +74,7 @@ int main() {
     cout << endl;
 
     cb.submitMove("D3", "G6");
-    cout << endl;*/
+    cout << endl;
 
     return 0;
 }

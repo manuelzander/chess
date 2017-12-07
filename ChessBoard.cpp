@@ -35,7 +35,7 @@ void ChessBoard::insertPieces(){
   currentBoard["A1"] = new Rook(WHITE, this);
   currentBoard["B1"] = new Knight(WHITE, this);
   currentBoard["C1"] = new Bishop(WHITE, this);
-  currentBoard["D5"] = new Queen(WHITE, this);
+  currentBoard["D1"] = new Queen(WHITE, this);
   currentBoard["E1"] = new King(WHITE, this);
   currentBoard["F1"] = new Bishop(WHITE, this);
   currentBoard["G1"] = new Knight(WHITE, this);
@@ -68,7 +68,7 @@ void ChessBoard::insertPieces(){
 
   cout << "A new chess game is started!" << endl;
 
-  printBoard();
+  //printBoard();
 
 }
 
@@ -109,7 +109,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
   }
 
   if(checkCoordinateEmpty(fromCoordinate)){
-    cout << "There is no piece at position " << fromCoordinate << endl;
+    cout << "There is no piece at position " << fromCoordinate << "!" << endl;
     return;
   }
 
@@ -143,8 +143,8 @@ void ChessBoard::submitMove(const char* from, const char* to){
   if(!currentBoard[fromCoordinate]->checkMoveValidity(fromCoordinate, toCoordinate)){
 
     cout << currentBoard[fromCoordinate]->printPieceColour() << "'s "
-         << currentBoard[fromCoordinate]->printPieceType() << " cannot move from "
-         << fromCoordinate << " to " << toCoordinate << endl;
+         << currentBoard[fromCoordinate]->printPieceType() << " cannot move to "
+         << toCoordinate << "!" << endl;
 
   } else{ //...a move is valid
 
@@ -156,7 +156,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
 
     if(pieceCaptured){
       cout << " taking " << currentBoard[toCoordinate]->printPieceColour() << "'s "
-           << currentBoard[toCoordinate]->printPieceType() << endl;
+           << currentBoard[toCoordinate]->printPieceType();
 
       delete currentBoard[toCoordinate];
     }
@@ -171,6 +171,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
   // If checks not succeed, switch player
 
   //printBoard();
+  cout << endl;
   switchPlayers();
 }
 

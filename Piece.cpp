@@ -170,9 +170,6 @@ bool Piece::freeDiagonalWay(const string from, const string to){
         break;
       }
     }
-
-    cout << "LD" << endl;
-
   }
 
 

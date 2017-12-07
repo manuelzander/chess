@@ -29,19 +29,19 @@ bool Queen::checkMoveValidity(const string from, const string to){
     from[Ra] - to[Ra] == 0 &&
     validHorizontalWay);
 
-  cout << validHorizontalMove << endl;
+  //cout << validHorizontalMove << endl;
 
   validVerticalMove = (abs(from[Ra] - to[Ra]) > 0 &&
     from[Fi] - to[Fi] == 0 &&
     validVerticalWay);
 
-  cout << validVerticalMove << endl;
+  //cout << validVerticalMove << endl;
 
   validDiagonalMove = (abs(from[Fi] - to[Fi]) ==
     abs(from[Ra] - to[Ra]) &&
     validDiagonalWay);
 
-  cout << validDiagonalMove << endl;
+  //cout << validDiagonalMove << endl;
 
   /*if((validHorizontalMove || validVerticalMove || validDiagonalMove) &&
     !board->checkCoordinateEmpty(to))
