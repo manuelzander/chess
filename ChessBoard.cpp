@@ -170,7 +170,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
 
   // If checks not succeed, switch player
 
-  printBoard();
+  //printBoard();
   switchPlayers();
 }
 
