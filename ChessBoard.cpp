@@ -57,7 +57,6 @@ void ChessBoard::insertPieces(){
   cout << "A new chess game is started!" << endl;
 
   printBoard();
-
 }
 
 void ChessBoard::deletePieces(){
@@ -209,4 +208,27 @@ Colour ChessBoard::getPieceColour(const string coordinate){
 
   return currentBoard[coordinate]->getPieceColour();
 
+}
+
+void ChessBoard::getKingsPosition(){
+
+  map <string, Piece*> ::iterator it;
+  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+    if(it->second->getPieceType() == KING)
+      king_position = it->first;
+  }
+}
+
+bool ChessBoard::isKingInCheck(){
+
+  map <string, Piece*> ::iterator it;
+  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+
+    if(it->second->getPieceColour() != getCurrentPlayer() &&
+      it->second->checkMoveValidity(it->first,king_position))
+      cout << getCurrentPlayer() << "is in check" << endl;
+      return true;
+  }
+
+  return false;
 }

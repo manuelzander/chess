@@ -23,6 +23,9 @@ private:
   bool gameEnd;
   bool inCheck;
   bool pieceCaptured;
+  string king_position;
+  //string whiteKing;
+  //string blackKing;
 
 public:
   ChessBoard();
@@ -36,7 +39,9 @@ public:
 
   bool checkCoordinateValid(const string coordinate);
   bool checkCoordinateEmpty(const string coordinate);
+  bool isKingInCheck();
 
+  void getKingsPosition();
   void switchPlayers();
   void setPieceCaptured();
   void submitMove(const char* from, const char* to);
