@@ -34,8 +34,8 @@ void ChessBoard::insertPieces(){
 
   currentBoard["A1"] = new Rook(WHITE, this);
   currentBoard["B1"] = new Knight(WHITE, this);
-  currentBoard["C4"] = new Bishop(WHITE, this);
-  currentBoard["D1"] = new Queen(WHITE, this);
+  currentBoard["C1"] = new Bishop(WHITE, this);
+  currentBoard["D5"] = new Queen(WHITE, this);
   currentBoard["E1"] = new King(WHITE, this);
   currentBoard["F1"] = new Bishop(WHITE, this);
   currentBoard["G1"] = new Knight(WHITE, this);

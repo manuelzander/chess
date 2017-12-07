@@ -120,40 +120,56 @@ bool Piece::freeDiagonalWay(const string from, const string to){
     start[Ra] = from[Ra] + 1;
     start[Fi] = from[Fi] + 1;
 
-    for(string coordinate = start; coordinate[Ra] < to[Ra] && coordinate[Fi] < to[Fi]; coordinate[Ra]++, coordinate[Fi]++){
-      cout << coordinate << endl;
+    for(string coordinate = start; coordinate[Ra] < to[Ra] &&
+      coordinate[Fi] < to[Fi]; coordinate[Ra]++, coordinate[Fi]++){
+
       if(!board->checkCoordinateEmpty(coordinate)){
         freeDiagonalWay = false;
         break;
       }
     }
-
-    cout << "RU" << endl;
-
   }
   if(to[Ra] < from[Ra] && to[Fi] > from[Fi]){ //Right and down
 
+    start[Ra] = from[Ra] - 1;
+    start[Fi] = from[Fi] + 1;
 
+    for(string coordinate = start; coordinate[Ra] > to[Ra] &&
+      coordinate[Fi] < to[Fi]; coordinate[Ra]--, coordinate[Fi]++){
 
-
-
-    cout << "RD" << endl;
-
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
   }
   if(to[Ra] > from[Ra] && to[Fi] < from[Fi]){ //Left and up
 
+    start[Ra] = from[Ra] + 1;
+    start[Fi] = from[Fi] - 1;
 
+    for(string coordinate = start; coordinate[Ra] < to[Ra] &&
+      coordinate[Fi] > to[Fi]; coordinate[Ra]++, coordinate[Fi]--){
 
-
-
-    cout << "LU" << endl;
-
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
   }
   if(to[Ra] < from[Ra] && to[Fi] < from[Fi]){ //Left and down
 
+    start[Ra] = from[Ra] - 1;
+    start[Fi] = from[Fi] - 1;
 
+    for(string coordinate = start; coordinate[Ra] > to[Ra] &&
+      coordinate[Fi] > to[Fi]; coordinate[Ra]--, coordinate[Fi]--){
 
-
+      if(!board->checkCoordinateEmpty(coordinate)){
+        freeDiagonalWay = false;
+        break;
+      }
+    }
 
     cout << "LD" << endl;
 

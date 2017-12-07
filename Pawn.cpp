@@ -18,43 +18,49 @@ bool Pawn::checkMoveValidity(const string from, const string to){
 
   if(pieceColour == WHITE){
 
-    validMove = (from[0] == to[0] &&
-      from[1] + 1 == to[1] &&
+    validMove =
+      (from[Fi] == to[Fi] &&
+      from[Ra] + 1 == to[Ra] &&
       board->checkCoordinateEmpty(to));
 
     string middleCoordinate = "";
-    middleCoordinate += from[0];
-    middleCoordinate += (from[1] + 1);
+    middleCoordinate += from[Fi];
+    middleCoordinate += (from[Ra] + 1);
 
-    validSpecialMove = (from[1] == '2' &&
-      from[0] == to[0] &&
-      from[1] + 2 == to[1] &&
+    validSpecialMove =
+      (from[Ra] == '2' &&
+      from[Fi] == to[Fi] &&
+      from[Ra] + 2 == to[Ra] &&
       board->checkCoordinateEmpty(middleCoordinate) &&
       board->checkCoordinateEmpty(to));
 
-    validDiagonalMove = (from[1] + 1 == to[1] &&
-      abs(from[0] - to[0]) == 1 &&
+    validDiagonalMove =
+      (from[Ra] + 1 == to[Ra] &&
+      abs(from[Fi] - to[Fi]) == 1 &&
       !board->checkCoordinateEmpty(to));
   }
 
   if (pieceColour == BLACK) {
 
-    validMove = (from[0] == to[0] &&
-      from[1] - 1 == to[1] &&
+    validMove =
+      (from[Fi] == to[Fi] &&
+      from[Ra] - 1 == to[Ra] &&
       board->checkCoordinateEmpty(to));
 
     string middleCoordinate = "";
-    middleCoordinate += from[0];
-    middleCoordinate += (from[1] - 1);
+    middleCoordinate += from[Fi];
+    middleCoordinate += (from[Ra] - 1);
 
-    validSpecialMove = (from[1] == '7' &&
-      from[0] == to[0] &&
-      from[1] - 2 == to[1] &&
+    validSpecialMove =
+      (from[Ra] == '7' &&
+      from[Fi] == to[Fi] &&
+      from[Ra] - 2 == to[Ra] &&
       board->checkCoordinateEmpty(middleCoordinate) &&
       board->checkCoordinateEmpty(to));
 
-    validDiagonalMove = (from[1] - 1 == to[1] &&
-      abs(from[0] - to[0]) == 1 &&
+    validDiagonalMove =
+      (from[Ra] - 1 == to[Ra] &&
+      abs(from[Fi] - to[Fi]) == 1 &&
       !board->checkCoordinateEmpty(to));
   }
 

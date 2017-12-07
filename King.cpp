@@ -16,14 +16,17 @@ bool King::checkMoveValidity(const string from, const string to){
 
   bool validHorizontalMove, validVerticalMove, validDiagonalMove;
 
-  validHorizontalMove = (abs(from[0] - to[0]) == 1 &&
-    from[1] - to[1] == 0);
+  validHorizontalMove =
+    (abs(from[Fi] - to[Fi]) == 1 &&
+    from[Ra] - to[Ra] == 0);
 
-  validVerticalMove = (abs(from[1] - to[1]) == 1 &&
-    from[0] - to[0] == 0);
+  validVerticalMove =
+    (abs(from[Ra] - to[Ra]) == 1 &&
+    from[Fi] - to[Fi] == 0);
 
-  validDiagonalMove = (abs(from[0] - to[0]) == 1 &&
-    abs(from[1] - to[1]) == 1);
+  validDiagonalMove =
+    (abs(from[Fi] - to[Fi]) == 1 &&
+    abs(from[Ra] - to[Ra]) == 1);
 
   /*if((validHorizontalMove || validVerticalMove || validDiagonalMove) &&
     !board->checkCoordinateEmpty(to))

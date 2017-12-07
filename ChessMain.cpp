@@ -7,9 +7,13 @@ int main() {
 
   ChessBoard cb;
   //cb.resetBoard();
-  cb.submitMove("D2", "D3");
-  cb.submitMove("D7", "D5");
-  cb.submitMove("C4", "E6");
+  cb.submitMove("E2", "E3");
+  cb.submitMove("C7", "C6");
+  cb.submitMove("D5", "C6");
+  cb.submitMove("B8", "A6");
+  cb.submitMove("C6", "C7");
+  cb.submitMove("A6", "B5");
+
 
     /*cout << "===========================" << endl;
     cout << "Testing the Chess Engine" << endl;
