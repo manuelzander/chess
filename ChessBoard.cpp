@@ -40,14 +40,8 @@ void ChessBoard::insertPieces(){
   currentBoard["F1"] = new Bishop(WHITE, this);
   currentBoard["G1"] = new Knight(WHITE, this);
   currentBoard["H1"] = new Rook(WHITE, this);
-  currentBoard["A2"] = new Pawn(WHITE, this);
-  currentBoard["B2"] = new Pawn(WHITE, this);
-  currentBoard["C2"] = new Pawn(WHITE, this);
-  currentBoard["D2"] = new Pawn(WHITE, this);
-  currentBoard["E2"] = new Pawn(WHITE, this);
-  currentBoard["F2"] = new Pawn(WHITE, this);
-  currentBoard["G2"] = new Pawn(WHITE, this);
-  currentBoard["H2"] = new Pawn(WHITE, this);
+  for(string coordinate = "A2"; coordinate[Fi] <= 'H'; coordinate[Fi]++)
+    currentBoard[coordinate] = new Pawn(WHITE, this);
 
   currentBoard["A8"] = new Rook(BLACK, this);
   currentBoard["B8"] = new Knight(BLACK, this);
@@ -57,18 +51,12 @@ void ChessBoard::insertPieces(){
   currentBoard["F8"] = new Bishop(BLACK, this);
   currentBoard["G8"] = new Knight(BLACK, this);
   currentBoard["H8"] = new Rook(BLACK, this);
-  currentBoard["A7"] = new Pawn(BLACK, this);
-  currentBoard["B7"] = new Pawn(BLACK, this);
-  currentBoard["C7"] = new Pawn(BLACK, this);
-  currentBoard["D7"] = new Pawn(BLACK, this);
-  currentBoard["E7"] = new Pawn(BLACK, this);
-  currentBoard["F7"] = new Pawn(BLACK, this);
-  currentBoard["G7"] = new Pawn(BLACK, this);
-  currentBoard["H7"] = new Pawn(BLACK, this);
+  for(string coordinate = "A7"; coordinate[Fi] <= 'H'; coordinate[Fi]++)
+    currentBoard[coordinate] = new Pawn(BLACK, this);
 
   cout << "A new chess game is started!" << endl;
 
-  //printBoard();
+  printBoard();
 
 }
 
@@ -78,7 +66,6 @@ void ChessBoard::deletePieces(){
   for (it = currentBoard.begin(); it != currentBoard.end(); it++){
     delete it->second;
   }
-
 }
 
 void ChessBoard::resetBoard(){
@@ -87,7 +74,6 @@ void ChessBoard::resetBoard(){
   deletePieces();
   currentBoard.clear();
   insertPieces();
-
 }
 
 void ChessBoard::submitMove(const char* from, const char* to){
