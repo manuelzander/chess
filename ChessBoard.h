@@ -23,7 +23,8 @@ private:
   bool gameEnd;
   bool inCheck;
   bool pieceCaptured;
-  string king_position;
+  string checking_piece;
+  //string king_position;
   //string whiteKing;
   //string blackKing;
 
@@ -35,13 +36,16 @@ public:
   void deletePieces(); //Delete all pieces from board
 
   Colour getCurrentPlayer();
+  Colour getOpponent();
   Colour getPieceColour(const string coordinate);
+  string printColour(Colour colour);
 
   bool checkCoordinateValid(const string coordinate);
   bool checkCoordinateEmpty(const string coordinate);
-  bool isKingInCheck();
+  bool isKingInCheck(Colour colour);
+  bool isKingInCheckmate(Colour colour);
 
-  void getKingsPosition();
+  string getKingsPosition(Colour colour);
   void switchPlayers();
   void setPieceCaptured();
   void submitMove(const char* from, const char* to);
