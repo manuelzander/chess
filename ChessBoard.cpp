@@ -261,48 +261,50 @@ bool ChessBoard::isKingInCheck(Colour colour){
 
 bool ChessBoard::isKingInCheckmate(Colour colour){
 
-  //cout << endl << "Test " << getOpponent() << "'s King for checkmate" << endl;
+  cout << endl << "Test " << getOpponent() << "'s King for checkmate" << endl;
 
   // Possible to capture the checking piece?!
-
   cout << endl << "Checking piece:" << checking_piece;
 
   map <string, Piece*> ::iterator it;
   for (it = currentBoard.begin(); it != currentBoard.end(); it++){
     if(it->second->getPieceColour() == getOpponent() &&
       it->second->checkMoveValidity(it->first, checking_piece)){
+      cout << endl << it->first << " can capture the checking piece" << endl;
       return false;
     }
   }
 
   // Can king move out of check?!
-
   string kings_position = getKingsPosition(colour);
-  //string coordinate;
-
 
   for(char file = 'A'; file <= 'H'; file++){
     for(char rank = '1'; rank <= '8'; rank++){
     string coordinate = "";
     coordinate += file;
     coordinate += rank;
-    //cout << coordinate << endl;
+
+    bool capture_king = false;
 
       if(currentBoard[kings_position]->checkMoveValidity(kings_position, coordinate) &&
-        checkCoordinateEmpty(coordinate) && (!checkCoordinateEmpty(coordinate) &&
+        (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
           currentBoard[kings_position]->getPieceColour()!=
-            currentBoard[coordinate]->getPieceColour() ))){
+            currentBoard[coordinate]->getPieceColour()))){
 
-        cout << endl << "King can move to " << coordinate << endl;
+        cout << endl << "King can move to " << coordinate;
 
         for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+
           if(it->second->getPieceColour() == getCurrentPlayer() &&
             it->second->checkMoveValidity(it->first, coordinate)){
-            return false;
+              cout << endl << it->first << " could capture the King there" << endl;
+              capture_king = true;
           }
+
         }
 
-        //return false;
+        if (capture_king == false)
+          return capture_king;
       }
     }
   }
