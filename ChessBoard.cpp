@@ -309,19 +309,45 @@ bool ChessBoard::isKingInCheckmate(Colour colour){
     }
   }
 
+  // Possible to move an opponents piece in betwee?
 
-  /*string kings_position = getKingsPosition(colour);
+  /*
+  For each of the oppontents pieces
+   -->> Generate every possible location
+   (Test validity of ever board location)
 
-  map <string, Piece*> ::iterator it;
-  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-    if(it->second->getPieceColour() == getCurrentPlayer() &&
-      it->second->checkMoveValidity(it->first, kings_position)){
-      cout << endl << currentBoard[kings_position]->printPieceColour()
-           << " is in check";
-      return true;
+   For every such location test if king not in check
+  */
+
+  for(char file = 'A'; file <= 'H'; file++){
+    for(char rank = '1'; rank <= '8'; rank++){
+    string coordinate = "";
+    coordinate += file;
+    coordinate += rank;
+
+    for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+      if(it->second->getPieceColour() == getOpponent() &&
+        it->second->getPieceType() != KING &&
+        it->second->checkMoveValidity(it->first, coordinate) &&
+          (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
+            currentBoard[kings_position]->getPieceColour()!=
+              currentBoard[coordinate]->getPieceColour()))){
+
+                //cout << endl << it->first << " can move to " << coordinate << endl;
+
+                if(currentBoard[checking_piece]->checkMoveValidity(checking_piece, coordinate)){
+                  cout << endl << checking_piece << " can hit " << coordinate << endl;
+
+                  //return false;
+                }
+
+              }
+      }
     }
   }
-  return false;*/
+
+
+
 
   return true;
 }
