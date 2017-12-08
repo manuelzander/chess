@@ -17,16 +17,10 @@ using namespace std;
 
 class ChessBoard {
 private:
-
   map <string, Piece*> currentBoard;
   Colour currentPlayer;
   bool gameEnd;
-  bool inCheck;
-  bool pieceCaptured;
   string checking_piece;
-  //string king_position;
-  //string whiteKing;
-  //string blackKing;
 
 public:
   ChessBoard();
@@ -44,10 +38,10 @@ public:
   bool checkCoordinateEmpty(const string coordinate);
   bool isKingInCheck(Colour colour);
   bool isKingInCheckmate(Colour colour);
+  bool simulateMoveTocheckCheck(const string from, const string to, Colour colour);
 
   string getKingsPosition(Colour colour);
   void switchPlayers();
-  void setPieceCaptured();
   void submitMove(const char* from, const char* to);
   void resetBoard();
 
