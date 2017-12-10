@@ -333,7 +333,7 @@ bool ChessBoard::isKingInCheckmate(Colour colour){
 
 bool ChessBoard::simulateMoveTocheckCheck(const string from, const string to, Colour colour){
 
-  bool KingInCheck, pieceCaptured;
+  bool KingInCheck, pieceCaptured = false;
   Piece* backup;
 
   if(!checkCoordinateEmpty(to))

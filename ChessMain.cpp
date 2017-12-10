@@ -262,7 +262,7 @@ int main() {
     cb.submitMove ("C5", "D4");
     cb.submitMove ("C3", "D4");
     cb.submitMove ("F5", "F4");
-    cout << endl << "--- Gufeld resigned ---" << endl;
+    cout << endl << "--- Gufeld resigned ---" << endl;*/
 
-    return 0;*/
+    return 0;
 }
