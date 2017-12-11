@@ -64,9 +64,6 @@ bool Pawn::checkMoveValidity(const string from, const string to){
       !board->checkCoordinateEmpty(to));
   }
 
-  /*if(validDiagonalMove)
-    board->setPieceCaptured();*/
-
   return (validMove || validSpecialMove || validDiagonalMove);
 }
 

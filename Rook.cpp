@@ -31,10 +31,6 @@ bool Rook::checkMoveValidity(const string from, const string to){
     from[Fi] - to[Fi] == 0 &&
     validVerticalWay);
 
-  /*if((validHorizontalMove || validVerticalMove) &&
-    !board->checkCoordinateEmpty(to))
-      board->setPieceCaptured();*/
-
   return (validHorizontalMove || validVerticalMove);
 }
 

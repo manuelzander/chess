@@ -33,6 +33,10 @@ string ChessBoard::printColour(Colour colour){
   return colour == WHITE ? "White" : "Black";
 }
 
+Colour ChessBoard::getPieceColour(const string coordinate){
+  return currentBoard[coordinate]->getPieceColour();
+}
+
 void ChessBoard::insertPieces(){
 
   currentBoard["A1"] = new Rook(WHITE, this);
@@ -58,8 +62,6 @@ void ChessBoard::insertPieces(){
     currentBoard[coordinate] = new Pawn(BLACK, this);
 
   cout << "A new chess game is started!" << endl;
-
-  //printBoard();
 }
 
 void ChessBoard::deletePieces(){
@@ -83,7 +85,6 @@ void ChessBoard::submitMove(const char* from, const char* to){
   string fromCoordinate (from);
   string toCoordinate (to);
 
-  // Consider moving these checks into a seperate function
   if(gameEnd){
     cout << "The game is already over!" << endl;
     return;
@@ -99,7 +100,6 @@ void ChessBoard::submitMove(const char* from, const char* to){
     cout << "There is no piece at position " << fromCoordinate << "!" << endl;
     return;
   }
-
 
   if(currentBoard[fromCoordinate]->getPieceColour() != getCurrentPlayer()){
     cout << "It is not " << currentBoard[fromCoordinate]->printPieceColour()
@@ -118,7 +118,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
   }
 
   if(fromCoordinate == toCoordinate){
-    cout << "The positions are identical!" << endl;
+    cout << "The coordinates are identical!" << endl;
     return;
   }
 
@@ -143,6 +143,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
          << currentBoard[fromCoordinate]->printPieceType() << " moves from "
          << fromCoordinate << " to " << toCoordinate;
 
+    // If a piece is captured, delete the pointer to it
     if(!checkCoordinateEmpty(toCoordinate)){
       cout << " taking " << currentBoard[toCoordinate]->printPieceColour() << "'s "
            << currentBoard[toCoordinate]->printPieceType();
@@ -150,10 +151,12 @@ void ChessBoard::submitMove(const char* from, const char* to){
       delete currentBoard[toCoordinate];
     }
 
+    // Change the maps key
     currentBoard[toCoordinate] = currentBoard[fromCoordinate];
     currentBoard.erase(fromCoordinate);
   }
 
+  //Check for check, checkmate and stalemate
   if (isKingInCheck(getOpponent())) {
     if (isKingInCheckmate(getOpponent())){
       cout << endl << printColour(getOpponent())
@@ -170,6 +173,106 @@ void ChessBoard::submitMove(const char* from, const char* to){
   //printBoard();
   cout << endl;
   switchPlayers();
+}
+
+bool ChessBoard::checkCoordinateEmpty(const string coordinate) {
+
+  if(currentBoard.count(coordinate)){
+    return false; //Count = 1, not empty
+  }
+  return true;
+}
+
+string ChessBoard::getKingsPosition(Colour colour){
+
+  map <string, Piece*> ::iterator it;
+  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+    if(it->second->getPieceColour() == colour &&
+    it->second->getPieceType() == KING){
+      return it->first;
+    }
+  }
+  return "Error"; // Should not happen
+}
+
+bool ChessBoard::isKingInCheck(Colour colour){
+
+  string kings_position = getKingsPosition(colour);
+
+  // If king is WHITE, checking_piece should be BLACK and vice-versa
+  colour = colour == WHITE ? BLACK : WHITE;
+
+  map <string, Piece*> ::iterator it;
+  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+    if(it->second->getPieceColour() == colour &&
+      it->second->checkMoveValidity(it->first, kings_position)){
+      checking_piece = it->first;
+      return true;
+    }
+  }
+  return false;
+}
+
+bool ChessBoard::isKingInCheckmate(Colour colour){
+
+  map <string, Piece*> ::iterator it;
+  string kings_position = getKingsPosition(colour);
+
+  /*For each of the players pieces:
+  --> Generate every possible location (i.e. every valid move)*/
+
+  for(char file = 'A'; file <= 'H'; file++){
+    for(char rank = '1'; rank <= '8'; rank++){
+    string coordinate = "";
+    coordinate += file;
+    coordinate += rank;
+
+    for (it = currentBoard.begin(); it != currentBoard.end(); it++){
+      if(it->second->getPieceColour() == getOpponent() &&
+         it->second->checkMoveValidity(it->first, coordinate) &&
+         (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
+         currentBoard[kings_position]->getPieceColour()!=
+         currentBoard[coordinate]->getPieceColour()))){
+
+         /*For every possible valid move test if king NOT in check anymore,
+         if this happens king NOT in checkmate, so return false*/
+         if (simulateMoveTocheckCheck(it->first, coordinate, getOpponent()) == false) {
+           return false;
+         }
+        }
+      }
+    }
+  }
+  return true;
+}
+
+bool ChessBoard::simulateMoveTocheckCheck(const string from, const string to, Colour colour){
+
+  bool KingInCheck = false, pieceCaptured = false;
+  Piece* backup = NULL;
+
+  if(!checkCoordinateEmpty(to))
+    pieceCaptured = true;
+
+  //Backup of captured piece
+  if(pieceCaptured)
+    backup = currentBoard[to];
+
+  currentBoard[to] = currentBoard[from];
+  currentBoard.erase(from);
+
+  KingInCheck = isKingInCheck(colour);
+
+  currentBoard[from] = currentBoard[to];
+
+  //Restore captured piece
+  if(pieceCaptured){
+    currentBoard[to] = backup;
+  } else {
+    currentBoard.erase(to);
+  }
+
+  return KingInCheck;
 }
 
 void ChessBoard::printBoard() {
@@ -206,156 +309,4 @@ bool ChessBoard::checkCoordinateValid(const string coordinate) {
     return false;
   }
   return true;
-}
-
-bool ChessBoard::checkCoordinateEmpty(const string coordinate) {
-
-  if(currentBoard.count(coordinate)){
-    return false; //Count = 1, not empty
-  }
-  return true;
-}
-
-Colour ChessBoard::getPieceColour(const string coordinate){
-
-  return currentBoard[coordinate]->getPieceColour();
-
-}
-
-string ChessBoard::getKingsPosition(Colour colour){
-
-  //Always returns the position of the opponents's king
-  map <string, Piece*> ::iterator it;
-  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-    if(it->second->getPieceColour() == colour &&
-    it->second->getPieceType() == KING){
-      return it->first;
-    }
-  }
-  return "Error"; // Will not happen
-}
-
-bool ChessBoard::isKingInCheck(Colour colour){
-
-  string kings_position = getKingsPosition(colour);
-
-  // If king is WHITE, checking_piece should be BLACK and vice-versa
-  colour = colour == WHITE ? BLACK : WHITE;
-
-  map <string, Piece*> ::iterator it;
-  for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-    if(it->second->getPieceColour() == colour &&
-      it->second->checkMoveValidity(it->first, kings_position)){
-      checking_piece = it->first;
-      return true;
-    }
-  }
-  return false;
-}
-
-bool ChessBoard::isKingInCheckmate(Colour colour){
-
-  //cout << endl << "Checking piece:" << checking_piece;
-  map <string, Piece*> ::iterator it;
-  string kings_position = getKingsPosition(colour);
-
-  /*for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-    if(it->second->getPieceColour() == getOpponent() &&
-      it->second->checkMoveValidity(it->first, checking_piece)){
-      cout << endl << it->first << " can capture the checking piece" << endl;
-      return false;
-    }
-  }
-
-  // Can king move out of check?!
-  for(char file = 'A'; file <= 'H'; file++){
-    for(char rank = '1'; rank <= '8'; rank++){
-    string coordinate = "";
-    coordinate += file;
-    coordinate += rank;
-
-    bool capture_king = false;
-
-      if(currentBoard[kings_position]->checkMoveValidity(kings_position, coordinate) &&
-        (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
-          currentBoard[kings_position]->getPieceColour()!=
-            currentBoard[coordinate]->getPieceColour()))){
-
-        cout << endl << "King can move to " << coordinate;
-
-        for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-
-          if(it->second->getPieceColour() == getCurrentPlayer() &&
-            it->second->checkMoveValidity(it->first, coordinate)){
-              cout << endl << it->first << " could capture the King there" << endl;
-              capture_king = true;
-          }
-
-        }
-
-        if (capture_king == false)
-          return capture_king;
-      }
-    }
-  }*/
-
-  /*For each of the players pieces:
-  --> Generate every possible location (i.e. valid move)
-  For every such location: test if king NOT in check*/
-
-  for(char file = 'A'; file <= 'H'; file++){
-    for(char rank = '1'; rank <= '8'; rank++){
-    string coordinate = "";
-    coordinate += file;
-    coordinate += rank;
-
-    for (it = currentBoard.begin(); it != currentBoard.end(); it++){
-      if(it->second->getPieceColour() == getOpponent() &&
-         //it->second->getPieceType() != KING &&
-         it->second->checkMoveValidity(it->first, coordinate) &&
-         (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
-         currentBoard[kings_position]->getPieceColour()!=
-         currentBoard[coordinate]->getPieceColour()))){
-
-         /*For every possible move test if king NOT in check anymore,
-         if this happens king NOT in checkmate, so return false*/
-         if (simulateMoveTocheckCheck(it->first, coordinate, getOpponent()) == false) {
-           //cout << endl << it->first << " can capture checking piece at "
-                //<< coordinate;
-           return false;
-         }
-        }
-      }
-    }
-  }
-  return true;
-}
-
-bool ChessBoard::simulateMoveTocheckCheck(const string from, const string to, Colour colour){
-
-  bool KingInCheck, pieceCaptured;
-  Piece* backup;
-
-  if(!checkCoordinateEmpty(to))
-    pieceCaptured = true;
-
-  //Backup of captured piece
-  if(pieceCaptured)
-    backup = currentBoard[to];
-
-  currentBoard[to] = currentBoard[from];
-  currentBoard.erase(from);
-
-  KingInCheck = isKingInCheck(colour);
-
-  currentBoard[from] = currentBoard[to];
-
-  //Restore captured piece
-  if(pieceCaptured){
-    currentBoard[to] = backup;
-  } else {
-    currentBoard.erase(to);
-  }
-
-  return KingInCheck;
 }

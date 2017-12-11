@@ -22,9 +22,6 @@ bool Bishop::checkMoveValidity(const string from, const string to){
     abs(from[Ra] - to[Ra]) &&
     validDiagonalWay);
 
-  /*if(validDiagonalMove && !board->checkCoordinateEmpty(to))
-      board->setPieceCaptured();*/
-
   return validDiagonalMove;
 }
 

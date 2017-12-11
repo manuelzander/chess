@@ -28,10 +28,6 @@ bool King::checkMoveValidity(const string from, const string to){
     (abs(from[Fi] - to[Fi]) == 1 &&
     abs(from[Ra] - to[Ra]) == 1);
 
-  /*if((validHorizontalMove || validVerticalMove || validDiagonalMove) &&
-    !board->checkCoordinateEmpty(to))
-      board->setPieceCaptured();*/
-
   return (validHorizontalMove || validVerticalMove || validDiagonalMove);
 }
 

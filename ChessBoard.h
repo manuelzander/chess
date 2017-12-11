@@ -32,7 +32,9 @@ public:
   Colour getCurrentPlayer();
   Colour getOpponent();
   Colour getPieceColour(const string coordinate);
+
   string printColour(Colour colour);
+  string getKingsPosition(Colour colour);
 
   bool checkCoordinateValid(const string coordinate);
   bool checkCoordinateEmpty(const string coordinate);
@@ -40,11 +42,9 @@ public:
   bool isKingInCheckmate(Colour colour);
   bool simulateMoveTocheckCheck(const string from, const string to, Colour colour);
 
-  string getKingsPosition(Colour colour);
   void switchPlayers();
   void submitMove(const char* from, const char* to);
   void resetBoard();
-
   void printBoard();
 };
 

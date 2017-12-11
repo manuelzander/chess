@@ -172,28 +172,5 @@ bool Piece::freeDiagonalWay(const string from, const string to){
     }
   }
 
-
-
-  /*{
-    start[Ra] = from[Ra] - 1;
-    start[Fi] = from[Fi];
-
-    for(string coordinate = start; coordinate[Ra] > to[Ra]; coordinate[Ra]--){
-      if(!board->checkCoordinateEmpty(coordinate)){
-        freeDiagonalWay = false;
-        break;
-      }
-    }
-  } else{
-    start[Ra] = from[Ra] + 1;
-    start[Fi] = from[Fi];
-
-    for(string coordinate = start; coordinate[Ra] < to[Ra]; coordinate[Ra]++){
-      if(!board->checkCoordinateEmpty(coordinate)){
-        freeDiagonalWay = false;
-        break;
-      }
-    }
-  }*/
   return freeDiagonalWay;
 }
