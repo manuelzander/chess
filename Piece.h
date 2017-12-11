@@ -20,7 +20,7 @@ protected:
 
 public:
   Piece(Colour _colour, ChessBoard *_board);
-  virtual ~Piece() = 0;
+  virtual ~Piece();
   virtual string printSymbol() = 0;
   virtual bool checkMoveValidity(const string from, const string to) = 0;
   Colour getPieceColour();
