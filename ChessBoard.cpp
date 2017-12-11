@@ -77,8 +77,8 @@ void ChessBoard::deletePieces(){
 void ChessBoard::resetBoard(){
   currentPlayer = WHITE;
   gameEnd = false;
-  deletePieces();
-  currentBoard.clear();
+  deletePieces(); //Delete pointers
+  currentBoard.clear(); //Delete map keys
   insertPieces();
 }
 
@@ -92,8 +92,8 @@ void ChessBoard::submitMove(const char* from, const char* to){
     return;
   }
 
-  if(!checkCoordinateValid(fromCoordinate)
-      || !checkCoordinateValid(toCoordinate) ){
+  if(!checkCoordinateValid(fromCoordinate) ||
+     !checkCoordinateValid(toCoordinate)){
     cout << "A given coordinate is invalid!" << endl;
     return;
   }
@@ -111,11 +111,11 @@ void ChessBoard::submitMove(const char* from, const char* to){
 
   if (!checkCoordinateEmpty(toCoordinate)){
     if(currentBoard[fromCoordinate]->getPieceColour() ==
-        currentBoard[toCoordinate]->getPieceColour()){
-      cout << "One of "
-           << currentBoard[fromCoordinate]->printPieceColour()
-           << "'s pieces is already at position " << toCoordinate << endl;
-      return;
+       currentBoard[toCoordinate]->getPieceColour()){
+         cout << "One of "
+              << currentBoard[fromCoordinate]->printPieceColour()
+              << "'s pieces is already at position " << toCoordinate << endl;
+         return;
     }
   }
 
@@ -145,7 +145,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
          << currentBoard[fromCoordinate]->printPieceType() << " moves from "
          << fromCoordinate << " to " << toCoordinate;
 
-    // If a piece is captured, delete the pointer to it
+    // If a piece is captured, add to print out and delete the pointer to it
     if(!checkCoordinateEmpty(toCoordinate)){
       cout << " taking " << currentBoard[toCoordinate]->printPieceColour() << "'s "
            << currentBoard[toCoordinate]->printPieceType();
@@ -153,7 +153,7 @@ void ChessBoard::submitMove(const char* from, const char* to){
       delete currentBoard[toCoordinate];
     }
 
-    // Change the maps key
+    // Move pieces on map and delete map key
     currentBoard[toCoordinate] = currentBoard[fromCoordinate];
     currentBoard.erase(fromCoordinate);
   }
@@ -218,14 +218,10 @@ bool ChessBoard::isKingInCheck(Colour colour){
 
 bool ChessBoard::isKingInCheckmate(Colour colour){
 
-
   string kings_position = getKingsPosition(colour);
-
   vector<string> squares;
 
-  /*For each of the players pieces:
-  --> Generate every possible location (i.e. every valid move)*/
-
+  //Generate every board location and save in vector
   for(char file = 'A'; file <= 'H'; file++){
     for(char rank = '1'; rank <= '8'; rank++){
       string coordinate = "";
@@ -235,16 +231,15 @@ bool ChessBoard::isKingInCheckmate(Colour colour){
     }
   }
 
-  for (vector<string>::iterator it = squares.begin(); it != squares.end(); ++it) {
+  //Loop through all board locations
+  for (vector<string>::iterator it = squares.begin(); it != squares.end(); it++) {
     string& coordinate = *it;
-    for (vector<string>::iterator it2 = squares.begin(); it2 != squares.end(); ++it2) {
+    for (vector<string>::iterator it2 = squares.begin(); it2 != squares.end(); it2++) {
+      /*If a board location does not contain piece, skip it,
+      otherwise --> Test for every valid move*/
       if (checkCoordinateEmpty(*it2))
         continue;
-      // it->first *it2
-      // it->second currentBoard[*it2]
-      // coordinate *it
-    //for (map <string, Piece*>::iterator it = currentBoard.begin(); it != currentBoard.end(); it++){
-      //cout << coordinate << "  --- " << *it2 << ": " << currentBoard[*it2]->printPieceType() << endl;
+
       if(currentBoard[*it2]->getPieceColour() == getOpponent() &&
          currentBoard[*it2]->checkMoveValidity(*it2, coordinate) &&
          (checkCoordinateEmpty(coordinate) || (!checkCoordinateEmpty(coordinate) &&
@@ -253,9 +248,9 @@ bool ChessBoard::isKingInCheckmate(Colour colour){
 
          /*For every possible valid move test if king NOT in check anymore,
          if this happens king NOT in checkmate, so return false*/
-         if (simulateMoveTocheckCheck(*it2, coordinate, getOpponent()) == false) {
+         if (simulateMoveTocheckCheck(*it2, coordinate, getOpponent()) == false)
            return false;
-         }
+
         }
       }
     }
@@ -263,9 +258,7 @@ bool ChessBoard::isKingInCheckmate(Colour colour){
   return true;
 }
 
-bool ChessBoard::simulateMoveTocheckCheck(const string from, const string to, Colour colour) {
-  //cout << "From is : " << from << "to is " << to <<endl;
-  // << "From is : " << currentBoard[from]->printPieceType() <<endl;
+bool ChessBoard::simulateMoveTocheckCheck(const string from, const string to, Colour colour){
 
   bool KingInCheck = false, pieceCaptured = false;
   Piece* backup = NULL;
