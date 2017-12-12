@@ -21,12 +21,18 @@ protected:
 public:
   Piece(Colour _colour, ChessBoard *_board);
   virtual ~Piece();
+  //Helper function to print out unicode chess symbol
   virtual string printSymbol() = 0;
-  virtual bool checkMoveValidity(const string from, const string to) = 0;
+  //Getter functions
   Colour getPieceColour();
   Type getPieceType();
   string printPieceColour();
   string printPieceType();
+  /*Function to check the general move validity (is the destination square of
+  a move theorethically reachable and is the way to that square free*/
+  virtual bool checkMoveValidity(const string from, const string to) = 0;
+  /*Helper functions for the previous function to check if
+  the way to reach the destination square is free*/
   bool freeHorizontalWay(const string from, const string to);
   bool freeVerticalWay(const string from, const string to);
   bool freeDiagonalWay(const string from, const string to);
